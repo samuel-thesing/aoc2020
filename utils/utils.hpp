@@ -628,4 +628,24 @@ Vec2i dirVec(Dir dir) {
 	}
 }
 
+std::string str(char c) {
+	return {c};
+}
+
+std::string str(int i) {
+	return std::to_string(i);
+}
+
+std::string str(double i) {
+	return std::to_string(i);
+}
+
+std::string str(long i) {
+	return std::to_string(i);
+}
+
+std::string str(uint64_t i) {
+	return std::to_string(i);
+}
+
 #endif //UTILS_H
