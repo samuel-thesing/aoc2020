@@ -648,4 +648,16 @@ std::string str(uint64_t i) {
 	return std::to_string(i);
 }
 
+std::vector<size_t> find_all_idx(const std::string& s, char pattern) {
+	return find_all_idx(s, str(pattern));
+}
+
+size_t find_nth(const std::string& s, char pattern, size_t n) {
+	return find_nth(s, str(pattern), n);
+}
+
+std::string replace_all(const std::string& s, char pattern, const std::string& replace) {
+	return replace_all(s, str(pattern), replace);
+}
+
 #endif //UTILS_H
