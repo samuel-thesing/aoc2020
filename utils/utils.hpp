@@ -370,6 +370,34 @@ std::tuple<Args...> extract_data(const std::regex& pattern, std::string s) {
 	return make_tuple_from_match<Args...>(match, std::index_sequence_for<Args...>{});
 }
 
+template<typename... Args>
+std::optional<std::tuple<Args...>> extract_data_opt(const std::regex& pattern, std::string s) {
+	std::smatch match;
+	if (!std::regex_match(s, match, pattern)) {
+		return std::nullopt;
+	}
+
+	return make_tuple_from_match<Args...>(match, std::index_sequence_for<Args...>{});
+}
+
+std::vector<std::string> split_regex(const std::string& s, std::regex& pattern) {
+	std::sregex_token_iterator iter(s.begin(), s.end(), pattern, -1);
+	std::sregex_token_iterator end;
+	return {iter, end};
+}
+
+std::vector<std::string> find_all_regex(const std::string& s, std::regex& pattern) {
+	std::sregex_iterator iter(s.begin(), s.end(), pattern);
+	std::sregex_iterator end;
+	std::vector<std::string> result{};
+	while (iter != end) {
+		std::smatch match = *iter;
+		result.push_back(match[1]);
+		++iter;
+	}
+	return result;
+}
+
 bool isDigit(char c) {
 	return '0' <= c && c <= '9';
 }
@@ -380,6 +408,10 @@ bool isLowercase(char c) {
 
 bool isUppercase(char c) {
 	return 'A' <= c && c <= 'Z';
+}
+
+bool isHex(char c) {
+	return ('0' <= c && c <= '9') || ('a' <= c && c <= 'f');
 }
 
 std::string format_time(std::chrono::duration<std::chrono::nanoseconds::rep, std::chrono::nanoseconds::period> duration) {
@@ -573,8 +605,8 @@ std::vector<size_t> find_all_idx(const std::string& s, const std::string& patter
 template<typename T>
 std::ostream& operator<< (std::ostream& os, const std::vector<T>& list) {
 	os << "{ ";
-	for (int n : list) {
-		os << n << " ";
+	for (const T& n : list) {
+		os << n << ", ";
 	}
 	os << "}";
 	return os;
