@@ -279,6 +279,10 @@ std::vector<T> split(const std::string& s, const std::string& delim, std::functi
 	return result;
 }
 
+std::vector<int> split_int(const std::string& s, const std::string& delim) {
+	return split<int>(s, delim, [](std::string s){return std::stoi(s);});
+}
+
 /**
  *	Splits a given string at the first occurrence of the given delimiter and returns both parts as pair
  *	@param s string to be split
@@ -690,6 +694,24 @@ size_t find_nth(const std::string& s, char pattern, size_t n) {
 
 std::string replace_all(const std::string& s, char pattern, const std::string& replace) {
 	return replace_all(s, str(pattern), replace);
+}
+
+template<typename T>
+std::vector<T> max_n(std::vector<T> list, size_t n) {
+	std::sort(list.begin(), list.end(), std::greater<T>());
+	if (list.size() < n) {
+		return list;
+	}
+	return std::vector<T>(list.begin(), list.begin() + n);
+}
+
+template<typename T>
+std::vector<T> min_n(std::vector<T> list, size_t n) {
+	std::sort(list.begin(), list.end(), std::less<T>());
+	if (list.size() < n) {
+		return list;
+	}
+	return std::vector<T>(list.begin(), list.begin() + n);
 }
 
 #endif //UTILS_H
