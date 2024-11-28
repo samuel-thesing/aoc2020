@@ -1,6 +1,8 @@
 #include <utils.hpp>
 
 int solve(const std::string &input) {
+	int result = 0;
+
 	auto blocks = split(input, "\n\n");
 
 	for (const auto& block : blocks) {
@@ -23,7 +25,7 @@ int solve(const std::string &input) {
     	const auto [] = extract_data<>(line, std::regex(""));
     }
 
-	return 0;
+	return result;
 }
 
 int main(int argc, char** argv) {
