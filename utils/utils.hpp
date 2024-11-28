@@ -714,4 +714,25 @@ std::vector<T> min_n(std::vector<T> list, size_t n) {
 	return std::vector<T>(list.begin(), list.begin() + n);
 }
 
+template<typename T>
+std::set<T> set_intersection(std::set<T> a, std::set<T> b) {
+	std::set<T> res{};
+	std::set_intersection(a.begin(), a.end(), b.begin(), b.end(), std::inserter(res, res.begin()));
+	return res;
+}
+
+template<typename T>
+std::set<T> set_sym_diff(std::set<T> a, std::set<T> b) {
+	std::set<T> res{};
+	std::set_symmetric_difference(a.begin(), a.end(), b.begin(), b.end(), std::inserter(res, res.begin()));
+	return res;
+}
+
+template<typename T>
+std::set<T> set_diff(std::set<T> a, std::set<T> b) {
+	std::set<T> res{};
+	std::set_difference(a.begin(), a.end(), b.begin(), b.end(), std::inserter(res, res.begin()));
+	return res;
+}
+
 #endif //UTILS_H
