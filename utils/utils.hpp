@@ -735,4 +735,40 @@ std::set<T> set_diff(std::set<T> a, std::set<T> b) {
 	return res;
 }
 
+template<typename T, typename U>
+std::set<T> map_key_set(const std::map<T, U>& map) {
+	std::set<T> res{};
+	for (auto it = map.begin(); it != map.end(); ++it) {
+		res.insert(it->first);
+	}
+	return res;
+}
+
+template<typename T, typename U>
+std::vector<T> map_key_list(const std::map<T, U>& map) {
+	std::vector<T> res{};
+	for (auto it = map.begin(); it != map.end(); ++it) {
+		res.push_back(it->first);
+	}
+	return res;
+}
+
+template<typename T, typename U>
+std::set<T> map_key_set(const std::unordered_map<T, U>& map) {
+	std::set<T> res{};
+	for (auto it = map.begin(); it != map.end(); ++it) {
+		res.insert(it->first);
+	}
+	return res;
+}
+
+template<typename T, typename U>
+std::vector<T> map_key_list(const std::unordered_map<T, U>& map) {
+	std::vector<T> res{};
+	for (auto it = map.begin(); it != map.end(); ++it) {
+		res.push_back(it->first);
+	}
+	return res;
+}
+
 #endif //UTILS_H
