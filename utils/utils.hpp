@@ -771,4 +771,54 @@ std::vector<T> map_key_list(const std::unordered_map<T, U>& map) {
 	return res;
 }
 
+template<typename T, typename U>
+std::unordered_map<T, U> invert_map(const std::unordered_map<U, T>& map) {
+	std::unordered_map<T, U> res{};
+	for (const auto& [key, value] : map) {
+		res[value] = key;
+	}
+	return res;
+}
+
+template<typename T, typename U>
+std::unordered_map<T, std::vector<U>> invert_map_vec(const std::unordered_map<U, std::vector<T>>& map) {
+	std::unordered_map<T, std::vector<U>> res{};
+	for (const auto& [key, values] : map) {
+		for (const auto& value : values) {
+			auto it = res.find(value);
+			if (it == res.end()) {
+				res.emplace(value, std::vector<U>{key});
+			} else {
+				it->second.push_back(key);
+			}
+		}
+	}
+	return res;
+}
+
+template<typename T, typename U>
+std::map<T, U> invert_map(const std::map<U, T>& map) {
+	std::map<T, U> res{};
+	for (const auto& [key, value] : map) {
+		res[value] = key;
+	}
+	return res;
+}
+
+template<typename T, typename U>
+std::map<T, std::vector<U>> invert_map_vec(const std::map<U, std::vector<T>>& map) {
+	std::map<T, std::vector<U>> res{};
+	for (const auto& [key, values] : map) {
+		for (const auto& value : values) {
+			auto it = res.find(value);
+			if (it == res.end()) {
+				res.emplace(value, std::vector<U>{key});
+			} else {
+				it->second.push_back(key);
+			}
+		}
+	}
+	return res;
+}
+
 #endif //UTILS_H

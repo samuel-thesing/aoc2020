@@ -5,35 +5,29 @@ int solve(const std::string &input) {
 
 	auto lines = split(input, "\n");
 
-	std::unordered_map<std::string, std::vector<std::tuple<int, std::string>>> bag_map{};
+	std::unordered_map<std::string, std::vector<std::string>> bag_map{};
 
     for (const auto& line : lines) {
     	const auto [outer_bag, inner_bags] = split_once(line, " bags contain ");
 
     	if (inner_bags == "no other bags.") {
-    		bag_map.emplace(outer_bag, std::vector<std::tuple<int, std::string>>{});
+    		bag_map.emplace(outer_bag, std::vector<std::string>{});
     		continue;
     	}
 
 		const auto inner_bags_vec = split(inner_bags, ", ");
 
-		std::vector<std::tuple<int, std::string>> bag_list{};
+		std::vector<std::string> bag_list{};
     	for (const auto& inner_bag : inner_bags_vec) {
-    		bag_list.push_back(extract_data<int, std::string>(std::regex("(\\d+) (.+) bags?\\.?"), inner_bag));
+    		bag_list.push_back(std::get<0>(extract_data<std::string>(std::regex("\\d+ (.+) bags?\\.?"), inner_bag)));
     	}
 
     	bag_map.emplace(outer_bag, bag_list);
     }
 
-	std::unordered_map<std::string, std::vector<std::string>> reversed_bags{};
+	auto reversed_bags = invert_map_vec(bag_map);
 	for (const auto& bag : map_key_list(bag_map)) {
 		reversed_bags.emplace(bag, std::vector<std::string>{});
-	}
-
-	for (const auto& [outer_bag, inner_bags] : bag_map) {
-		for (const auto& [_, inner_bag] : inner_bags) {
-			reversed_bags[inner_bag].push_back(outer_bag);
-		}
 	}
 
 	std::set<std::string> done{};
