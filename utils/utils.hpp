@@ -283,6 +283,10 @@ std::vector<int> split_int(const std::string& s, const std::string& delim) {
 	return split<int>(s, delim, [](std::string s){return std::stoi(s);});
 }
 
+std::vector<int64_t> split_int64(const std::string& s, const std::string& delim) {
+	return split<int64_t>(s, delim, [](std::string s){return std::stoll(s);});
+}
+
 /**
  *	Splits a given string at the first occurrence of the given delimiter and returns both parts as pair
  *	@param s string to be split
@@ -655,7 +659,7 @@ enum class Dir {
 	DOWN
 };
 
-Vec2i dirVec(Dir dir) {
+Vec2i dir_vec(Dir dir) {
 	switch (dir) {
     	case Dir::LEFT: return {-1, 0};
     	case Dir::RIGHT: return {1, 0};
