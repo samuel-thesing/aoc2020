@@ -10,7 +10,7 @@ int solve(const std::string &input) {
 		auto lines2 = split_int(block, "\n");
 
 
-        const auto [] = extract_data<>(block, std::regex(""));
+        const auto [] = extract_data<>(std::regex(""), block);
 
 		for (const auto& line : lines) {
 
@@ -22,7 +22,7 @@ int solve(const std::string &input) {
 	auto lines2 = split_int(input, "\n");
 
     for (const auto& line : lines) {
-    	const auto [] = extract_data<>(line, std::regex(""));
+    	const auto [] = extract_data<>(std::regex(""), line);
     }
 
 	return result;

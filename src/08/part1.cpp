@@ -3,34 +3,34 @@
 int solve(const std::string &input) {
 	int result = 0;
 
-	auto blocks = split(input, "\n\n");
-
-	for (const auto& block : blocks) {
-		auto lines = split(block, "\n");
-		auto lines2 = split_int(block, "\n");
-
-
-        const auto [] = extract_data<>(block, std::regex(""));
-
-		for (const auto& line : lines) {
-
-		}
-
-	}
-
 	auto lines = split(input, "\n");
-	auto lines2 = split_int(input, "\n");
 
-    for (const auto& line : lines) {
-    	const auto [] = extract_data<>(line, std::regex(""));
+	std::regex pattern("(.+) (\\+|-)(\\d+)");
+	std::unordered_set<int> executed{};
+	int pc = 0;
+    while (!executed.contains(pc)) {
+    	executed.insert(pc);
+    	const auto [instruction, sign, num] = extract_data<std::string, char, int>(pattern, lines[pc]);
+
+    	auto number = (sign == '-') ? -num : num;
+
+    	if (instruction == "nop") {
+    	} else if (instruction == "acc") {
+    		result += number;
+    	} else if (instruction == "jmp") {
+    		pc += number;
+    		continue;
+    	}
+
+    	pc++;
     }
 
 	return result;
 }
 
 int main(int argc, char** argv) {
-    auto runner = Runner<int>(solve, 2020, 08);
-    runner.add_test_file("t1.txt", 0);
+    auto runner = Runner<int>(solve, 2020, 8);
+    runner.add_test_file("t1.txt", 5);
 
     runner.add_input_file("i1.txt");
 
