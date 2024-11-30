@@ -825,4 +825,36 @@ std::map<T, std::vector<U>> invert_map_vec(const std::map<U, std::vector<T>>& ma
 	return res;
 }
 
+template<typename T>
+std::vector<std::vector<T>> split_vec(const std::vector<T>& vec, T delimiter) {
+	auto result = std::vector<std::vector<T>>{};
+	int last = 0;
+	for (int i = 0; i < vec.size(); i++) {
+		if (vec[i] == delimiter) {
+			result.push_back(std::vector<T>{vec.begin()+last, vec.begin()+i});
+			last = i + 1;
+		}
+	}
+	result.push_back(std::vector<T>{vec.begin()+last, vec.end()});
+	return result;
+}
+
+template<typename T>
+std::vector<std::vector<T>> split_vec_non_empty(const std::vector<T>& vec, T delimiter) {
+	auto result = std::vector<std::vector<T>>{};
+	int last = 0;
+	for (int i = 0; i < vec.size(); i++) {
+		if (vec[i] == delimiter) {
+			if (i - last > 0) {
+				result.push_back(std::vector<T>{vec.begin()+last, vec.begin()+i});
+			}
+			last = i + 1;
+		}
+	}
+	if (last < vec.size()-1) {
+		result.push_back(std::vector<T>{vec.begin()+last, vec.end()});
+	}
+	return result;
+}
+
 #endif //UTILS_H
